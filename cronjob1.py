@@ -14,10 +14,10 @@ class MinimalPublisher(Node):
     def __init__(self, msg = "Hi there Cronjob here"):
         super().__init__('minimal_publisher')
         self.publisher_ = self.create_publisher(String, 'microk8s_chatter', 10)
-        msg = String()
-        msg.data = '%s' % (self.msg)
-        self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
+        self.msg = String()
+        self.msg.data = (msg)
+        self.publisher_.publish(self.msg)
+        self.get_logger().info('Publishing: "%s"' % self.msg.data)
         
 #         timer_period = 2  # seconds
 #         self.timer = self.create_timer(timer_period, self.timer_callback)
@@ -36,7 +36,7 @@ def main(msg = ""):
     rclpy.init(args=None)
     minimal_publisher = MinimalPublisher(msg)
 
-    rclpy.spin(minimal_publisher)
+    rclpy.spin_once(minimal_publisher, timeout_sec=2)
 
     minimal_publisher.destroy_node()
     rclpy.shutdown()
