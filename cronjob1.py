@@ -36,7 +36,7 @@ def main(msg = ""):
     rclpy.init(args=None)
     minimal_publisher = MinimalPublisher(msg)
 
-    rclpy.spin(minimal_publisher, timeout_sec=2)
+    rclpy.spin_once(minimal_publisher, timeout_sec=10)
 
     minimal_publisher.destroy_node()
     rclpy.shutdown()
